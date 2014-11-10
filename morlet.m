@@ -15,7 +15,7 @@ n = length(x);
 
 F_x = fft(x);
 
-f_as = logspace(log10(minFreq), log10(maxFreq), nFreq); %analysis freqs
+f_as = linspace(minFreq, maxFreq, nFreq); %analysis freqs
 
 omega = linspace(0,Fs,length(x));
 
@@ -26,7 +26,7 @@ for i=1:nFreq
     c = sqrt(1+exp(-f_a*f_a) - 2*exp(-0.75*f_a*f_a));
     
     %k = exp(-0.5*sigma*sigma);
-    F_psi = c.*pi^0.25.*(exp(-0.5*(f_a - omega).^2*K/f_a));
+    F_psi = c.*pi^0.25.*(exp(-0.5*(f_a - omega).^2*K));
 
     y = F_x.*F_psi.'; 
     %size(y)
