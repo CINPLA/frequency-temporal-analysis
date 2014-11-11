@@ -8,7 +8,7 @@ nFreq = 1000;
 K = 50;
 
 
-[Y, freqs] = morlet( x, Fs, minFreq, maxFreq, nFreq, K);
+[Y, freqs] = morletz( x, Fs, minFreq, maxFreq, nFreq, K);
 
 imagesc((1:n)/Fs, log10(freqs), Y')
 set(gca, 'ydir', 'normal')

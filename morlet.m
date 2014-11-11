@@ -1,10 +1,13 @@
-function [ Y, f_as ] = morlet(x, Fs, minFreq, maxFreq, nFreq, K, varargin)
-%MORLET Performs morlet wavelet based bamd-pass filtering on x
+function [ Y, f_analysis ] = morlet(x, Fs, min_freq, max_freq, nFreq, K, varargin)
+%MORLET(x, Fs, min_freq, max_freq, nFreq, K, varargin) morlet analysis
+%
+%
+%   Performs morlet wavelet based bamd-pass filtering on x
 %   x is a signal measured from t=0 to t=1. 
 %   minfreq is the minimum frequency in the analysis
 %   maxfreq is the maximum frequency in the analysis
 %   nFreq is the number of frequencies in the analysis
-%   sigma is the quality factor
+%   K is the quality factor
 %   the analysis does the convolution in the frequency domain and is of 
 %   order n*log(n)*nFreq 
 %   the filter frequencies are spread logarithmically, and the bin size
@@ -18,7 +21,7 @@ p.addRequired('maxFreq', @(x) isnumeric(x));
 p.addRequired('nFreq', @(x) isnumeric(x));
 p.addRequired('K', @(x) isnumeric(x));
 p.addParamValue('logfreq', def_logfreq, @(x) isnumeric(x));
-p.parse(x, Fs, minFreq, maxFreq, nFreq, K, varargin{:});
+p.parse(x, Fs, min_freq, max_freq, nFreq, K, varargin{:});
 logfreq = p.Results.logfreq;
 
 n = length(x);
@@ -26,9 +29,9 @@ n = length(x);
 F_x = fft(x);
 
 if logfreq
-    f_as = logspace(log10(minFreq), log10(maxFreq), nFreq); %analysis freqs
+    f_analysis = logspace(log10(min_freq), log10(max_freq), nFreq); %analysis freqs
 else
-    f_as = linspace(minFreq, maxFreq, nFreq); %analysis freqs
+    f_analysis = linspace(min_freq, max_freq, nFreq); %analysis freqs
 end
 
 omega = linspace(0,Fs,length(x));
@@ -36,7 +39,7 @@ omega = linspace(0,Fs,length(x));
 
 Y = zeros(n, nFreq); 
 for i=1:nFreq
-    f_a = f_as(i);
+    f_a = f_analysis(i);
     c = sqrt(1+exp(-f_a*f_a) - 2*exp(-0.75*f_a*f_a));
     
     %k = exp(-0.5*sigma*sigma);
