@@ -41,9 +41,10 @@ Y = zeros(n, nFreq);
 for i=1:nFreq
     f_a = f_analysis(i);
     c = sqrt(1+exp(-f_a*f_a) - 2*exp(-0.75*f_a*f_a));
-    
+    c1 = sqrt(sqrt(2*pi)*f_a/K);
+    c2 = 1/c1;
     %k = exp(-0.5*sigma*sigma);
-    F_psi = c.*pi^0.25.*(exp(-0.5*(f_a - omega).^2*K));
+    F_psi = c*exp(-0.5*(f_a - omega).^2*K/f_a);
 
     y = F_x.*F_psi.'; 
     %size(y)

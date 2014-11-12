@@ -8,16 +8,16 @@ nFreq = 1000;
 K = 50;
 
 
-[Y, freqs] = morletz( x, Fs, minFreq, maxFreq, nFreq, K);
+[Y, freqs] = morlet( x, Fs, minFreq, maxFreq, nFreq, K);
 
-imagesc((1:n)/Fs, log10(freqs), Y')
+imagesc((1:n)/Fs, (freqs), Y')
 set(gca, 'ydir', 'normal')
 xlabel('time')
-ylabel('log10(frequency)')
+ylabel('frequency')
 
 
 % cone of influence
 R = K./freqs;
 hold on
-plot(R,log10(freqs),'LineWidth',2,'Color', 'k')
-plot(n/Fs - R, log10(freqs),'LineWidth',2,'Color', 'k')
+plot(R,(freqs),'LineWidth',2,'Color', 'k')
+plot(n/Fs - R, (freqs),'LineWidth',2,'Color', 'k')
