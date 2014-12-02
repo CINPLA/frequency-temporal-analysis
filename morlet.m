@@ -20,7 +20,7 @@ p.addRequired('minFreq', @(x) isnumeric(x));
 p.addRequired('maxFreq', @(x) isnumeric(x));
 p.addRequired('nFreq', @(x) isnumeric(x));
 p.addRequired('K', @(x) isnumeric(x));
-p.addParamValue('logfreq', def_logfreq, @(x) isnumeric(x));
+p.addParameter('logfreq', def_logfreq, @(x) isnumeric(x));
 p.parse(x, Fs, min_freq, max_freq, nFreq, K, varargin{:});
 logfreq = p.Results.logfreq;
 
@@ -41,15 +41,15 @@ Y = zeros(n, nFreq);
 for i=1:nFreq
     f_a = f_analysis(i);
     c = sqrt(1+exp(-f_a*f_a) - 2*exp(-0.75*f_a*f_a));
-    c1 = sqrt(sqrt(2*pi)*f_a/K);
-    c2 = 1/c1;
+%     c1 = sqrt(sqrt(2*pi)*f_a/K);
+%     c2 = 1/c1;
     %k = exp(-0.5*sigma*sigma);
     F_psi = c*exp(-0.5*(f_a - omega).^2*K/f_a);
 
     y = F_x.*F_psi.'; 
     %size(y)
     %max(y)
-    Y(:,i) = sqrt(abs(ifft(y))); 
+    Y(:,i) = abs(ifft(y)); 
 end
 
 
